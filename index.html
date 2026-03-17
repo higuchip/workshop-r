@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop: Introducao a Manipulacao de Dados Florestais no R</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 30px;
+            line-height: 1.7;
+            color: #2c3e50;
+            background-color: #fafafa;
+        }
+        h1 {
+            color: #1a5276;
+            border-bottom: 3px solid #1a6e3a;
+            padding-bottom: 12px;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #1a6e3a;
+            font-size: 1.15em;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #1a5276;
+            margin-top: 45px;
+            border-left: 4px solid #1a6e3a;
+            padding-left: 12px;
+        }
+        h3 {
+            color: #1a6e3a;
+            margin-top: 25px;
+        }
+        .header-info {
+            background: linear-gradient(135deg, #d5f5e3, #d6eaf8);
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #a9dfbf;
+        }
+        .header-info p {
+            margin: 4px 0;
+        }
+        .programa {
+            background: #fff;
+            border: 1px solid #d5dbdb;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .programa h3 {
+            margin-top: 10px;
+        }
+        .programa table {
+            margin: 10px 0;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 16px 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        code {
+            font-family: 'Consolas', 'Fira Code', monospace;
+        }
+        .inline-code {
+            background: #e8e8e8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            color: #c0392b;
+        }
+        .tip {
+            background: #eafaf1;
+            border-left: 4px solid #27ae60;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .tip strong {
+            color: #27ae60;
+        }
+        .warning {
+            background: #fef9e7;
+            border-left: 4px solid #f39c12;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .warning strong {
+            color: #f39c12;
+        }
+        .exercise {
+            background: #f5eef8;
+            border-left: 4px solid #8e44ad;
+            padding: 14px 18px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .exercise strong {
+            color: #8e44ad;
+        }
+        .context {
+            background: #fdf2e9;
+            border-left: 4px solid #e67e22;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .context strong {
+            color: #e67e22;
+        }
+        .section-break {
+            text-align: center;
+            margin: 40px 0;
+            color: #bdc3c7;
+            font-size: 1.5em;
+        }
+        .digite {
+            background: #fdf2e9;
+            border: 2px dashed #e67e22;
+            padding: 12px 16px;
+            margin: 10px 0;
+            border-radius: 6px;
+        }
+        .digite strong {
+            color: #e67e22;
+        }
+        .intervalo {
+            background: #d5f5e3;
+            border: 2px solid #1a6e3a;
+            padding: 15px 20px;
+            margin: 35px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        .intervalo strong {
+            color: #1a6e3a;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background: #1a6e3a;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #eaf2f8;
+        }
+        footer {
+            margin-top: 50px;
+            padding-top: 15px;
+            border-top: 2px solid #1a6e3a;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        @media print {
+            body { background: white; max-width: none; }
+            .intervalo { break-inside: avoid; }
+            .exercise { break-inside: avoid; }
+            pre { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Workshop: Introducao a Manipulacao de Dados Florestais no R</h1>
+<p class="subtitle">Do dado bruto de campo a tabelas organizadas &mdash; com aplicacoes em inventario florestal</p>
+
+<div class="header-info">
+    <p><strong>Instrutor:</strong> Prof. Dr. Pedro Higuchi</p>
+    <p><strong>Carga horaria:</strong> 8 horas (dia inteiro)</p>
+    <p><strong>Pre-requisitos:</strong> R e RStudio instalados. Nao e necessaria experiencia previa com R.</p>
+    <p><strong>Material:</strong> Este documento + arquivo <span class="inline-code">inventario.csv</span></p>
+</div>
+
+<div class="programa">
+    <h3>Programa do dia</h3>
+    <table>
+        <tr><th>Horario</th><th>Conteudo</th></tr>
+        <tr><td>08:30 &ndash; 09:00</td><td>Abertura: por que aprender a manipular dados no R?</td></tr>
+        <tr><td>09:00 &ndash; 10:00</td><td>Modulo 1 &mdash; Primeiros passos: importacao e exploracao de dados</td></tr>
+        <tr><td>10:00 &ndash; 10:15</td><td>Intervalo</td></tr>
+        <tr><td>10:15 &ndash; 12:00</td><td>Modulo 2 &mdash; Manipulacao basica: pipe, select, filter, arrange</td></tr>
+        <tr><td>12:00 &ndash; 13:30</td><td>Almoco</td></tr>
+        <tr><td>13:30 &ndash; 15:00</td><td>Modulo 3 &mdash; Transformacao de dados: mutate e criacao de variaveis</td></tr>
+        <tr><td>15:00 &ndash; 15:15</td><td>Intervalo</td></tr>
+        <tr><td>15:15 &ndash; 16:30</td><td>Modulo 4 &mdash; Agrupamento e resumo: group_by, summarise, count</td></tr>
+        <tr><td>16:30 &ndash; 17:30</td><td>Modulo 5 &mdash; Exercicio integrador: processando um inventario completo</td></tr>
+    </table>
+</div>
+
+<!-- ============================================================ -->
+<h2>Abertura: por que aprender a manipular dados no R?</h2>
+
+<p>Profissionais que trabalham com dados florestais e ambientais &mdash; seja em consultoria,
+pesquisa, orgaos ambientais ou empresas do setor florestal &mdash; lidam rotineiramente
+com planilhas extensas: inventarios com milhares de arvores, levantamentos de fauna e flora,
+monitoramentos de restauracao ecologica, dados de parcelas permanentes.
+O processamento desses dados (filtrar, calcular, agrupar, resumir) e o passo fundamental
+antes de qualquer analise ou relatorio.</p>
+
+<p>Na pratica, esse processamento quase sempre e feito manualmente no Excel:
+copiar colunas, aplicar filtros, arrastar formulas, montar tabelas dinamicas.
+Funciona, mas e lento, propenso a erros e dificil de repetir.
+Quando o mesmo trabalho precisa ser refeito para um novo conjunto de dados
+&mdash; outro inventario, outro projeto, outra area &mdash;
+o processo comeca do zero.</p>
+
+<p>O R resolve esse problema de forma direta:</p>
+
+<p><strong>Eficiencia</strong> &mdash; Operacoes que levam horas no Excel
+(filtrar milhares de registros, calcular area seccional para cada arvore,
+gerar tabelas resumo por parcela ou por especie) sao executadas em segundos.</p>
+
+<p><strong>Reutilizacao</strong> &mdash; Um script criado para processar um inventario
+pode ser reaproveitado em outros projetos. Basta trocar o arquivo de entrada.</p>
+
+<p><strong>Rastreabilidade</strong> &mdash; Cada passo esta documentado no codigo.
+Se um colega precisa conferir como a tabela foi gerada, ou se voce precisa
+refazer a analise meses depois, o script e o registro completo do que foi feito.</p>
+
+<div class="context">
+    <strong>O que este workshop cobre:</strong>
+    Este e um workshop de <strong>fundamentos de manipulacao de dados</strong>.
+    Voce vai aprender a importar dados de inventario florestal, explorar, filtrar,
+    calcular variaveis dendrometricas, agrupar, resumir e exportar tabelas organizadas.
+    Sao as operacoes-base que sustentam qualquer analise florestal.
+    <br><br>
+    <strong>O que este workshop nao cobre (ainda):</strong>
+    Analises fitossociologicas completas (densidade, frequencia, dominancia relativas, IVI),
+    visualizacao grafica com <span class="inline-code">ggplot2</span>,
+    e indices de diversidade sao temas para modulos avancados.
+    Aqui, o foco e dominar a manipulacao &mdash; sem ela, nenhuma dessas analises e possivel.
+</div>
+
+<p>Vamos trabalhar com um <strong>inventario florestal real</strong> de Floresta Ombrofila Mista
+como estudo de caso. Ao final do dia, voce sera capaz de pegar uma planilha bruta
+de campo e transforma-la em tabelas resumo organizadas por parcela e por especie,
+prontas para alimentar relatorios e analises mais avancadas.</p>
+
+<div class="tip">
+    <strong>Como usar este material:</strong> Abra o RStudio e crie um novo script
+    (<em>File &gt; New File &gt; R Script</em>). Digite os comandos apresentados neste
+    documento no seu script e execute com <strong>Ctrl+Enter</strong>.
+    <strong>Nao copie e cole</strong> &mdash; digitar ajuda a fixar os comandos!
+    Ao final, voce tera um script completo como referencia para seus projetos.
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULO 1 -->
+<!-- ============================================================ -->
+<h2>Modulo 1 &mdash; Primeiros passos</h2>
+
+<h3>1.1 Instalando e carregando o tidyverse</h3>
+
+<p>O <span class="inline-code">tidyverse</span> e um conjunto de pacotes criado para
+facilitar a manipulacao, transformacao e visualizacao de dados no R.
+O pacote central que usaremos e o <span class="inline-code">dplyr</span>, que fornece
+uma gramatica intuitiva para manipular tabelas de dados.</p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Instalando o tidyverse (apenas na primeira vez)
+install.packages("tidyverse")
+
+# Carregando o tidyverse
+library(tidyverse)</code></pre>
+
+<div class="tip">
+    <strong>Dica:</strong> <span class="inline-code">install.packages()</span> so precisa ser executado
+    uma vez no seu computador. Ja o <span class="inline-code">library()</span> deve ser executado
+    toda vez que abrir uma nova sessao do R.
+</div>
+
+<h3>1.2 Importando os dados</h3>
+
+<p>Nosso estudo de caso e um inventario florestal em <strong>Floresta Ombrofila Mista</strong>
+no planalto serrano de Santa Catarina &mdash; um tipo de levantamento comumente exigido
+em processos de licenciamento que envolvam supressao de vegetacao nativa.</p>
+
+<p>O arquivo <span class="inline-code">inventario.csv</span> contem 1.843 arvores
+medidas em 50 parcelas, com tres variaveis:</p>
+
+<table>
+    <tr><th>Coluna</th><th>Descricao</th></tr>
+    <tr><td><span class="inline-code">Parcela</span></td><td>Numero da parcela (1 a 50)</td></tr>
+    <tr><td><span class="inline-code">Especie</span></td><td>Nome cientifico completo da especie</td></tr>
+    <tr><td><span class="inline-code">DAP</span></td><td>Diametro a altura do peito, em centimetros</td></tr>
+</table>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Verificando o diretorio de trabalho
+getwd()
+
+# Se necessario, defina o diretorio:
+# setwd("caminho/para/o/diretorio")
+
+# Importando os dados
+dados <- read.csv2("inventario.csv")</code></pre>
+
+<div class="warning">
+    <strong>Atencao:</strong> Usamos <span class="inline-code">read.csv2()</span> porque o arquivo
+    usa ponto e virgula (<span class="inline-code">;</span>) como separador &mdash; padrao brasileiro.
+    Se o arquivo usasse virgula, a funcao seria <span class="inline-code">read.csv()</span>.
+</div>
+
+<h3>1.3 Explorando os dados</h3>
+
+<p>Antes de qualquer analise, o primeiro passo e sempre <strong>conhecer os dados</strong>.
+Em licenciamento, isso equivale a "conferir a planilha de campo" antes de processar.</p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Primeiras linhas
+head(dados)
+
+# Ultimas linhas
+tail(dados)
+
+# Estrutura: tipos de cada coluna
+str(dados)
+
+# Resumo estatistico
+summary(dados)
+
+# Dimensoes (linhas x colunas)
+dim(dados)
+
+# Visao geral do tidyverse
+glimpse(dados)</code></pre>
+
+<div class="exercise">
+    <strong>Exercicio 1:</strong> Com base nos resultados, responda:
+    <br>a) Quantas arvores (linhas) e variaveis (colunas) tem o dataset?
+    <br>b) Qual o DAP medio, minimo e maximo?
+    <br>c) Os dados parecem consistentes ou ha algo fora do esperado?
+</div>
+
+<div class="intervalo">
+    <strong>Intervalo &mdash; 15 minutos</strong>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULO 2 -->
+<!-- ============================================================ -->
+<h2>Modulo 2 &mdash; Manipulacao basica</h2>
+
+<h3>2.1 O operador pipe: %&gt;%</h3>
+
+<p>O <strong>pipe</strong> (<span class="inline-code">%&gt;%</span>) e o conceito central
+do <span class="inline-code">tidyverse</span>. Ele encadeia operacoes de forma legivel,
+passando o resultado de uma funcao como entrada da proxima.</p>
+
+<p>Pense nele como a palavra <strong>"entao"</strong>:</p>
+<p><em>"Pegue os dados, <strong>entao</strong> filtre, <strong>entao</strong> selecione,
+<strong>entao</strong> ordene."</em></p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># SEM pipe (leitura de dentro para fora)
+head(dados, 10)
+
+# COM pipe (leitura da esquerda para a direita)
+dados %>% head(10)</code></pre>
+
+<p>Ambos fazem a mesma coisa, mas o pipe torna o codigo mais legivel.
+A vantagem fica evidente quando encadeamos varias operacoes, como veremos adiante.</p>
+
+<div class="tip">
+    <strong>Atalho:</strong> No RStudio, <strong>Ctrl+Shift+M</strong> insere
+    <span class="inline-code">%&gt;%</span> automaticamente. Use sempre!
+</div>
+
+<h3>2.2 Selecionando colunas com <span class="inline-code">select()</span></h3>
+
+<p>Em datasets maiores (com dezenas de colunas), voce frequentemente precisa trabalhar
+apenas com algumas variaveis. O <span class="inline-code">select()</span> escolhe quais colunas manter.</p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Selecionar apenas Especie
+dados %>% select(Especie)
+
+# Selecionar Parcela e DAP
+dados %>% select(Parcela, DAP)
+
+# Excluir uma coluna (com sinal de menos)
+dados %>% select(-Parcela)</code></pre>
+
+<div class="tip">
+    <strong>Dica:</strong> Por enquanto, estamos apenas visualizando os resultados no console.
+    Para salvar, use <span class="inline-code">&lt;-</span> (ex:
+    <span class="inline-code">resultado &lt;- dados %&gt;% select(Especie)</span>).
+</div>
+
+<h3>2.3 Filtrando linhas com <span class="inline-code">filter()</span></h3>
+
+<p>O <span class="inline-code">filter()</span> seleciona linhas que atendem a uma condicao.
+No dia a dia do licenciamento, e o equivalente a "filtrar a planilha" &mdash; mas de forma
+documentada e reprodutivel.</p>
+
+<h3>Filtros numericos</h3>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Arvores com DAP maior que 30 cm
+dados %>% filter(DAP > 30)
+
+# Arvores com DAP entre 10 e 20 cm
+dados %>% filter(DAP >= 10 & DAP <= 20)
+
+# Arvores da parcela 1
+dados %>% filter(Parcela == 1)</code></pre>
+
+<div class="warning">
+    <strong>Atencao:</strong> Comparacao de igualdade usa <span class="inline-code">==</span>
+    (dois sinais de igual). Operadores logicos: <span class="inline-code">&amp;</span> (E),
+    <span class="inline-code">|</span> (OU), <span class="inline-code">!</span> (NAO).
+</div>
+
+<h3>Filtros com texto</h3>
+
+<div class="context">
+    <strong>Situacao pratica:</strong> Imagine que voce precisa saber quantos individuos
+    de uma especie ameacada ou de interesse comercial existem no seu inventario.
+    Ou que precisa isolar os dados de uma unica parcela para conferencia.
+    Filtrar por especie ou por parcela e uma das operacoes mais frequentes
+    no processamento de dados florestais.
+</div>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Filtrar Araucaria angustifolia (especie imune ao corte)
+dados %>% filter(Especie == "Araucaria angustifolia")
+
+# Filtrar mais de uma especie
+dados %>% filter(Especie %in% c("Araucaria angustifolia",
+                                 "Podocarpus lambertii"))</code></pre>
+
+<h3>Combinando operacoes com pipe</h3>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Especie e DAP das arvores com DAP > 40 cm
+dados %>%
+  filter(DAP > 40) %>%
+  select(Especie, DAP)</code></pre>
+
+<div class="exercise">
+    <strong>Exercicio 2:</strong>
+    <br>a) Filtre todas as arvores da parcela 25. Quantas sao?
+    <br>b) Filtre as arvores de <em>Araucaria angustifolia</em> com DAP superior a 20 cm.
+    Mostre apenas Parcela e DAP.
+    <br>c) Filtre todas as arvores com DAP menor que 10 cm. Essas arvores tipicamente
+    ficariam abaixo do limite de inclusao de muitos inventarios &mdash; quantas sao?
+</div>
+
+<h3>2.4 Ordenando com <span class="inline-code">arrange()</span></h3>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Ordenar por DAP crescente
+dados %>% arrange(DAP)
+
+# Ordenar por DAP decrescente
+dados %>% arrange(desc(DAP))
+
+# Ordenar por Parcela, depois por DAP decrescente
+dados %>% arrange(Parcela, desc(DAP))</code></pre>
+
+<div class="exercise">
+    <strong>Exercicio 3:</strong> Quais sao as 10 maiores arvores do inventario?
+    Mostre Especie, Parcela e DAP, ordenadas do maior para o menor DAP.
+    <br><em>Dica: combine <span class="inline-code">arrange()</span>,
+    <span class="inline-code">select()</span> e <span class="inline-code">head()</span>
+    com o pipe.</em>
+</div>
+
+<div class="section-break">&bull; &bull; &bull;</div>
+<div class="intervalo">
+    <strong>Almoco &mdash; 12:00 as 13:30</strong>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULO 3 -->
+<!-- ============================================================ -->
+<h2>Modulo 3 &mdash; Transformacao de dados</h2>
+
+<h3>3.1 Criando novas colunas com <span class="inline-code">mutate()</span></h3>
+
+<p>O <span class="inline-code">mutate()</span> cria novas colunas a partir de calculos
+com as existentes. No contexto de inventario florestal, frequentemente precisamos
+calcular variaveis dendrometricas a partir das medidas de campo.</p>
+
+<div class="context">
+    <strong>Situacao pratica:</strong> Os dados brutos de campo geralmente trazem
+    apenas as medidas diretas (DAP, altura, circunferencia). Mas para qualquer
+    analise florestal &mdash; seja um relatorio de inventario, um plano de manejo
+    ou um estudo academico &mdash; voce precisa calcular variaveis derivadas:
+    area seccional, volume, classes de diametro. O <span class="inline-code">mutate()</span>
+    faz isso para todas as arvores de uma so vez.
+</div>
+
+<h3>Area seccional</h3>
+
+<p>A area seccional (g) e a area da secao transversal do tronco,
+calculada pela formula:</p>
+
+<p style="text-align: center; font-size: 1.1em;">
+    <strong>g = &pi; &times; DAP&sup2; / 40000</strong> &nbsp;&nbsp;(resultado em m&sup2;)
+</p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Calculando a area seccional (m2)
+dados %>%
+  mutate(g = pi * DAP^2 / 40000)</code></pre>
+
+<h3>Volume estimado</h3>
+
+<p>Uma estimativa simplificada de volume individual pode ser obtida com um fator de forma:</p>
+
+<p style="text-align: center; font-size: 1.1em;">
+    <strong>vol = g &times; h &times; ff</strong>
+</p>
+
+<p>Onde h e a altura (usaremos 10 m como estimativa media) e ff e o fator de forma
+(usaremos 0,7, valor tipico para florestas nativas):</p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Volume estimado (m3)
+dados %>%
+  mutate(
+    g   = pi * DAP^2 / 40000,
+    vol = g * 10 * 0.7
+  )</code></pre>
+
+<h3>Classificacao por classe de diametro</h3>
+
+<p>A classificacao em classes de diametro e exigida em praticamente todo
+inventario florestal para licenciamento. Usamos <span class="inline-code">case_when()</span>:</p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Classes de diametro
+dados %>%
+  mutate(classe_dap = case_when(
+    DAP < 10             ~ "5-10",
+    DAP >= 10 & DAP < 20 ~ "10-20",
+    DAP >= 20 & DAP < 30 ~ "20-30",
+    DAP >= 30 & DAP < 40 ~ "30-40",
+    DAP >= 40 & DAP < 50 ~ "40-50",
+    DAP >= 50            ~ "50+"
+  ))</code></pre>
+
+<h3>3.2 Salvando as transformacoes</h3>
+
+<p>Vamos salvar todas as variaveis calculadas em um novo objeto:</p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Criando dataset completo com variaveis calculadas
+dados2 <- dados %>%
+  mutate(
+    g         = pi * DAP^2 / 40000,
+    vol       = g * 10 * 0.7,
+    classe_dap = case_when(
+      DAP < 10             ~ "5-10",
+      DAP >= 10 & DAP < 20 ~ "10-20",
+      DAP >= 20 & DAP < 30 ~ "20-30",
+      DAP >= 30 & DAP < 40 ~ "30-40",
+      DAP >= 40 & DAP < 50 ~ "40-50",
+      DAP >= 50            ~ "50+"
+    )
+  )
+
+# Conferindo
+head(dados2)
+glimpse(dados2)</code></pre>
+
+<div class="exercise">
+    <strong>Exercicio 4:</strong>
+    <br>a) Usando <span class="inline-code">dados2</span>, filtre as arvores da classe "50+".
+    Quantas sao e de quais especies?
+    <br>b) Filtre apenas as <em>Araucaria angustifolia</em> e mostre Parcela, DAP e volume
+    estimado, ordenados do maior para o menor volume.
+    <br>c) Qual o volume total estimado de <em>Araucaria angustifolia</em> no inventario?
+    <br><em>Dica para o item c: filtre e depois use <span class="inline-code">summarise(vol_total = sum(vol))</span>
+    &mdash; veremos essa funcao em detalhe no proximo modulo.</em>
+</div>
+
+<div class="intervalo">
+    <strong>Intervalo &mdash; 15 minutos</strong>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULO 4 -->
+<!-- ============================================================ -->
+<h2>Modulo 4 &mdash; Agrupamento e resumo</h2>
+
+<p>Ate agora, trabalhamos com registros individuais (cada linha = uma arvore).
+Neste modulo, vamos aprender a <strong>resumir dados por grupos</strong> &mdash;
+a operacao mais importante para gerar tabelas tecnicas de relatorios.</p>
+
+<h3>4.1 Contando com <span class="inline-code">count()</span></h3>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Quantas arvores por parcela?
+dados %>% count(Parcela)
+
+# Quantas arvores por especie? (ordenado)
+dados %>%
+  count(Especie) %>%
+  arrange(desc(n))
+
+# Quantas arvores por classe de diametro?
+dados2 %>% count(classe_dap)</code></pre>
+
+<div class="tip">
+    <strong>Dica:</strong> <span class="inline-code">count()</span> cria automaticamente
+    uma coluna <span class="inline-code">n</span> com a contagem.
+    Voce pode renomear com <span class="inline-code">count(Especie, name = "abundancia")</span>.
+</div>
+
+<div class="exercise">
+    <strong>Exercicio 5:</strong>
+    <br>a) Quantas especies distintas foram registradas no inventario?
+    <br><em>Dica: conte por especie e depois use <span class="inline-code">nrow()</span>.</em>
+    <br>b) Qual a especie mais abundante? E a menos abundante?
+</div>
+
+<h3>4.2 Agrupando com <span class="inline-code">group_by()</span> + <span class="inline-code">summarise()</span></h3>
+
+<p>A combinacao <span class="inline-code">group_by()</span> + <span class="inline-code">summarise()</span>
+e a ferramenta mais poderosa do <span class="inline-code">dplyr</span>.
+Ela permite calcular <strong>qualquer estatistica</strong> para cada grupo.</p>
+
+<div class="context">
+    <strong>Situacao pratica:</strong> Praticamente toda analise florestal exige resumir
+    os dados por algum agrupamento: numero de arvores <strong>por parcela</strong>,
+    area basal <strong>por especie</strong>, volume <strong>por classe de diametro</strong>.
+    No Excel, isso seria feito com tabelas dinamicas. No R,
+    <span class="inline-code">group_by()</span> + <span class="inline-code">summarise()</span>
+    faz o mesmo &mdash; de forma mais rapida, flexivel e documentada.
+</div>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Resumo por parcela: numero de arvores e DAP medio
+dados %>%
+  group_by(Parcela) %>%
+  summarise(
+    n_arvores = n(),
+    dap_medio = mean(DAP)
+  )</code></pre>
+
+<p>Leia como: "Pegue os dados, <em>entao</em> agrupe por parcela,
+<em>entao</em> resuma calculando o numero de arvores e o DAP medio para cada parcela."</p>
+
+<div class="tip">
+    <strong>Funcoes uteis dentro de <span class="inline-code">summarise()</span>:</strong>
+    <br><span class="inline-code">n()</span> &mdash; numero de observacoes
+    <br><span class="inline-code">n_distinct()</span> &mdash; numero de valores unicos
+    <br><span class="inline-code">mean()</span> &mdash; media
+    <br><span class="inline-code">sd()</span> &mdash; desvio padrao
+    <br><span class="inline-code">min()</span>, <span class="inline-code">max()</span> &mdash; minimo e maximo
+    <br><span class="inline-code">median()</span> &mdash; mediana
+    <br><span class="inline-code">sum()</span> &mdash; soma
+</div>
+
+<h3>4.3 Tabela resumo por parcela para relatorio tecnico</h3>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Tabela completa por parcela
+resumo_parcela <- dados2 %>%
+  group_by(Parcela) %>%
+  summarise(
+    n_ind      = n(),
+    n_especies = n_distinct(Especie),
+    dap_medio  = round(mean(DAP), 2),
+    dap_max    = round(max(DAP), 2),
+    G          = round(sum(g), 4),
+    vol_total  = round(sum(vol), 4)
+  )
+
+# Visualizando
+resumo_parcela
+
+# Visualizando como planilha
+View(resumo_parcela)</code></pre>
+
+<div class="tip">
+    <strong>Dica:</strong> A funcao <span class="inline-code">round(x, 2)</span> arredonda
+    para 2 casas decimais &mdash; util para tabelas de relatorio.
+</div>
+
+<h3>4.4 Tabela resumo por especie</h3>
+
+<p>A lista de especies com abundancia, frequencia e dominancia e peca central
+de qualquer estudo floristico para licenciamento:</p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Tabela por especie
+resumo_especie <- dados2 %>%
+  group_by(Especie) %>%
+  summarise(
+    abundancia  = n(),
+    n_parcelas  = n_distinct(Parcela),
+    dap_medio   = round(mean(DAP), 2),
+    dap_max     = round(max(DAP), 2),
+    G_total     = round(sum(g), 4),
+    vol_total   = round(sum(vol), 4)
+  ) %>%
+  arrange(desc(abundancia))
+
+# As 15 especies mais abundantes
+resumo_especie %>% head(15)</code></pre>
+
+<div class="exercise">
+    <strong>Exercicio 6:</strong>
+    <br>a) Qual parcela tem a maior area basal (G)?
+    <br>b) Qual parcela apresenta a maior riqueza de especies?
+    <br>c) Quantas especies ocorrem em apenas 1 parcela? Essas seriam as especies raras
+    do levantamento.
+    <br>d) Qual especie apresenta o maior volume total estimado?
+</div>
+
+<h3>4.5 Combinando filter com group_by</h3>
+
+<p>Podemos filtrar antes ou depois de agrupar. A ordem muda o resultado:</p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Filtrar ANTES: resumo apenas das arvores com DAP >= 10
+dados2 %>%
+  filter(DAP >= 10) %>%
+  group_by(Parcela) %>%
+  summarise(
+    n_arvores = n(),
+    dap_medio = round(mean(DAP), 2)
+  )
+
+# Filtrar DEPOIS: apenas parcelas com mais de 50 arvores
+dados2 %>%
+  group_by(Parcela) %>%
+  summarise(n_arvores = n()) %>%
+  filter(n_arvores > 50)</code></pre>
+
+<div class="warning">
+    <strong>A ordem importa!</strong>
+    Filtrar <em>antes</em> de agrupar remove linhas dos dados brutos.
+    Filtrar <em>depois</em> de agrupar remove grupos do resumo.
+</div>
+
+<h3>4.6 Distribuicao por classe de diametro</h3>
+
+<div class="context">
+    <strong>Situacao pratica:</strong> A distribuicao diametrica e uma das tabelas mais
+    comuns em qualquer relatorio de inventario florestal &mdash; seja para fins academicos,
+    planos de manejo ou estudos ambientais. Veja como gera-la em poucas linhas:
+</div>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Distribuicao diametrica geral
+dados2 %>%
+  count(classe_dap, name = "n_arvores") %>%
+  arrange(classe_dap)
+
+# Distribuicao diametrica por especie (exemplo: Araucaria)
+dados2 %>%
+  filter(Especie == "Araucaria angustifolia") %>%
+  count(classe_dap, name = "n_arvores") %>%
+  arrange(classe_dap)</code></pre>
+
+<h3>4.7 Exportando resultados</h3>
+
+<p>Ao final do processamento, voce pode exportar as tabelas em CSV
+para usar no Word, Excel ou outro software de edicao de relatorios:</p>
+
+<div class="digite">
+    <strong>Digite no seu script:</strong>
+</div>
+
+<pre><code># Exportando tabelas
+write.csv2(resumo_parcela, "resumo_por_parcela.csv", row.names = FALSE)
+write.csv2(resumo_especie, "resumo_por_especie.csv", row.names = FALSE)</code></pre>
+
+<div class="tip">
+    <strong>Dica:</strong> <span class="inline-code">write.csv2()</span> gera um CSV com ponto e virgula
+    como separador e virgula decimal &mdash; abre corretamente no Excel em portugues.
+</div>
+
+<div class="section-break">&bull; &bull; &bull;</div>
+
+<!-- ============================================================ -->
+<!-- MODULO 5 -->
+<!-- ============================================================ -->
+<h2>Modulo 5 &mdash; Exercicio integrador</h2>
+
+<p>Voce recebeu os dados brutos de um inventario florestal em Floresta Ombrofila Mista
+e precisa processa-los para gerar as tabelas basicas que alimentarao o relatorio tecnico.
+Usando tudo o que aprendeu hoje, resolva os desafios abaixo.</p>
+
+<div class="exercise">
+    <strong>Desafio 1 &mdash; Caracterizacao geral do inventario</strong>
+    <br><br>
+    Calcule e apresente: numero total de individuos amostrados, numero de especies registradas,
+    numero de parcelas, DAP medio geral (com desvio padrao), e volume total estimado.
+    <br><br>
+    <em>Dica: use <span class="inline-code">summarise()</span> diretamente sobre
+    <span class="inline-code">dados2</span>, sem <span class="inline-code">group_by()</span>.</em>
+</div>
+
+<div class="exercise">
+    <strong>Desafio 2 &mdash; Tabela por parcela</strong>
+    <br><br>
+    Gere uma tabela com: numero de individuos, riqueza de especies,
+    DAP medio, area basal (G) e volume estimado total para cada parcela.
+    Exporte como CSV.
+</div>
+
+<div class="exercise">
+    <strong>Desafio 3 &mdash; Lista de especies</strong>
+    <br><br>
+    Gere uma tabela com todas as especies, contendo: abundancia (n de individuos),
+    numero de parcelas em que ocorre, DAP medio, DAP maximo, area basal total e volume total.
+    Ordene por abundancia decrescente. Exporte como CSV.
+</div>
+
+<div class="exercise">
+    <strong>Desafio 4 &mdash; Foco em uma especie de interesse</strong>
+    <br><br>
+    A <em>Araucaria angustifolia</em> e uma especie-chave da Floresta Ombrofila Mista,
+    protegida por lei (Lei da Mata Atlantica, 11.428/2006) e classificada como
+    Criticamente Em Perigo (CR) na lista vermelha.
+    Em qualquer estudo florestal nesse bioma, e fundamental caracterizar sua populacao.
+    <br><br>
+    a) Quantos individuos de <em>Araucaria</em> existem no inventario?
+    <br>b) Em quantas parcelas a especie ocorre?
+    <br>c) Qual a distribuicao diametrica da <em>Araucaria</em> (por classe de DAP)?
+    <br>d) Qual o volume total estimado de <em>Araucaria</em>?
+</div>
+
+<div class="exercise">
+    <strong>Desafio 5 &mdash; Distribuicao diametrica</strong>
+    <br><br>
+    Gere a tabela de distribuicao diametrica geral do inventario
+    (numero de arvores por classe de DAP).
+    <br><br>
+    <em>Desafio extra:</em> gere a mesma tabela, mas incluindo tambem
+    a area basal e o volume estimado por classe de diametro.
+</div>
+
+<div class="section-break">&bull; &bull; &bull;</div>
+
+<!-- ============================================================ -->
+<!-- RESUMO FINAL -->
+<!-- ============================================================ -->
+<h2>Resumo dos comandos aprendidos</h2>
+
+<table>
+    <tr><th>Funcao</th><th>O que faz</th><th>Exemplo</th></tr>
+    <tr>
+        <td><span class="inline-code">%&gt;%</span></td>
+        <td>Encadeia operacoes (pipe)</td>
+        <td><span class="inline-code">dados %&gt;% head()</span></td>
+    </tr>
+    <tr>
+        <td><span class="inline-code">select()</span></td>
+        <td>Seleciona colunas</td>
+        <td><span class="inline-code">dados %&gt;% select(Especie, DAP)</span></td>
+    </tr>
+    <tr>
+        <td><span class="inline-code">filter()</span></td>
+        <td>Filtra linhas por condicao</td>
+        <td><span class="inline-code">dados %&gt;% filter(DAP &gt; 10)</span></td>
+    </tr>
+    <tr>
+        <td><span class="inline-code">arrange()</span></td>
+        <td>Ordena linhas</td>
+        <td><span class="inline-code">dados %&gt;% arrange(desc(DAP))</span></td>
+    </tr>
+    <tr>
+        <td><span class="inline-code">mutate()</span></td>
+        <td>Cria novas colunas</td>
+        <td><span class="inline-code">dados %&gt;% mutate(g = pi * DAP^2 / 40000)</span></td>
+    </tr>
+    <tr>
+        <td><span class="inline-code">count()</span></td>
+        <td>Conta observacoes por grupo</td>
+        <td><span class="inline-code">dados %&gt;% count(Especie)</span></td>
+    </tr>
+    <tr>
+        <td><span class="inline-code">group_by()</span></td>
+        <td>Agrupa dados por variavel</td>
+        <td><span class="inline-code">dados %&gt;% group_by(Parcela)</span></td>
+    </tr>
+    <tr>
+        <td><span class="inline-code">summarise()</span></td>
+        <td>Calcula estatisticas por grupo</td>
+        <td><span class="inline-code">... %&gt;% summarise(media = mean(DAP))</span></td>
+    </tr>
+    <tr>
+        <td><span class="inline-code">n()</span></td>
+        <td>Conta linhas (dentro de summarise)</td>
+        <td><span class="inline-code">summarise(total = n())</span></td>
+    </tr>
+    <tr>
+        <td><span class="inline-code">n_distinct()</span></td>
+        <td>Conta valores unicos</td>
+        <td><span class="inline-code">summarise(spp = n_distinct(Especie))</span></td>
+    </tr>
+    <tr>
+        <td><span class="inline-code">write.csv2()</span></td>
+        <td>Exporta para CSV (padrao BR)</td>
+        <td><span class="inline-code">write.csv2(df, "saida.csv")</span></td>
+    </tr>
+</table>
+
+<h2>Proximos passos</h2>
+
+<p>Neste workshop voce aprendeu os fundamentos de manipulacao de dados no R:
+importar, explorar, filtrar, calcular variaveis, agrupar, resumir e exportar.
+Sao as operacoes-base que sustentam qualquer analise florestal.</p>
+
+<p>Com essas ferramentas, voce ja consegue processar dados brutos de inventario
+e gerar tabelas resumo organizadas. Para chegar ao produto final de um relatorio
+tecnico completo, os proximos passos naturais seriam:</p>
+
+<p><strong>Descritores fitossociologicos</strong> &mdash; calculo de densidade,
+frequencia e dominancia (absolutas e relativas) e Indice de Valor de Importancia (IVI).
+Todas essas metricas sao calculadas usando exatamente as funcoes que voce
+aprendeu hoje (<span class="inline-code">group_by</span>,
+<span class="inline-code">summarise</span>, <span class="inline-code">mutate</span>).</p>
+
+<p><strong>Visualizacao de dados</strong> com o pacote <span class="inline-code">ggplot2</span>
+(tambem do tidyverse) &mdash; para gerar graficos de distribuicao diametrica,
+curvas de acumulacao de especies e figuras prontas para relatorios.</p>
+
+<p><strong>Indices de diversidade</strong> &mdash; Shannon, Simpson e rarefacao,
+usados para avaliar e comparar a diversidade biologica entre areas.</p>
+
+<footer>
+    <p><strong>Workshop: Introducao a Manipulacao de Dados Florestais no R</strong></p>
+    <p>Prof. Dr. Pedro Higuchi &mdash; UDESC/CAV</p>
+</footer>
+
+</body>
+</html>
